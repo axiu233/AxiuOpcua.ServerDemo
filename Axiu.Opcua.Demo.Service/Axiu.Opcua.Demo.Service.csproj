@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <Platforms>AnyCPU;x86</Platforms>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="OPCFoundation.NetStandard.Opc.Ua" Version="1.4.362.42" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Axiu.Opcua.Demo.Common\Axiu.Opcua.Demo.Common.csproj" />
+    <ProjectReference Include="..\Axiu.Opcua.Demo.Model\Axiu.Opcua.Demo.Model.csproj" />
+  </ItemGroup>
+
+</Project>
