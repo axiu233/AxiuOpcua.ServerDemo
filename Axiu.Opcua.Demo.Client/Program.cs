@@ -1,4 +1,6 @@
-﻿using System;
+﻿using PECSDBInterface;
+using System;
+using System.Data.SqlClient;
 
 namespace Axiu.Opcua.Demo.Client
 {

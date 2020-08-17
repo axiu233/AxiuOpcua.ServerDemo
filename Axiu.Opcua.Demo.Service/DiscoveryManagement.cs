@@ -1,28 +1,37 @@
-﻿using System;
-using Opc.Ua;
+﻿using Opc.Ua;
 using Opc.Ua.Configuration;
-using Opc.Ua.Server;
-using Opc.Ua.Gds.Server;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Text;
 
 namespace Axiu.Opcua.Demo.Service
 {
-    public class OpcuaManagement
+    public class DiscoveryManagement
     {
-        public void CreateServerInstance()
+        /// <summary>
+        /// 启动一个Discovery服务端
+        /// </summary>
+        public void StartDiscovery()
         {
             try
             {
                 var config = new ApplicationConfiguration()
                 {
-                    ApplicationName = "AxiuOpcua",
-                    ApplicationUri = Utils.Format(@"urn:{0}:AxiuOpcua", System.Net.Dns.GetHostName()),
-                    ApplicationType = ApplicationType.Server,
+                    ApplicationName = "Axiu UA Discovery",
+                    ApplicationUri = Utils.Format(@"urn:{0}:AxiuUADiscovery", System.Net.Dns.GetHostName()),
+                    ApplicationType = ApplicationType.DiscoveryServer,
                     ServerConfiguration = new ServerConfiguration()
                     {
-                        BaseAddresses = { "opc.tcp://172.17.4.68:8020/", "https://172.17.4.68:8021/" },
+                        BaseAddresses = { "opc.tcp://localhost:4840/" },
                         MinRequestThreadCount = 5,
                         MaxRequestThreadCount = 100,
-                        MaxQueuedRequestCount = 200,
+                        MaxQueuedRequestCount = 200
+                    },
+                    DiscoveryServerConfiguration = new DiscoveryServerConfiguration()
+                    {
+                        BaseAddresses = { "opc.tcp://localhost:4840/" },
+                        ServerNames = { "OpcuaDiscovery" }
                     },
                     SecurityConfiguration = new SecurityConfiguration
                     {
@@ -38,7 +47,7 @@ namespace Axiu.Opcua.Demo.Service
                     ClientConfiguration = new ClientConfiguration { DefaultSessionTimeout = 60000 },
                     TraceConfiguration = new TraceConfiguration()
                 };
-                config.Validate(ApplicationType.Server).GetAwaiter().GetResult();
+                config.Validate(ApplicationType.DiscoveryServer).GetAwaiter().GetResult();
                 if (config.SecurityConfiguration.AutoAcceptUntrustedCertificates)
                 {
                     config.CertificateValidator.CertificateValidation += (s, e) => { e.Accept = (e.Error.StatusCode == StatusCodes.BadCertificateUntrusted); };
@@ -46,8 +55,8 @@ namespace Axiu.Opcua.Demo.Service
 
                 var application = new ApplicationInstance
                 {
-                    ApplicationName = "AxiuOpcua",
-                    ApplicationType = ApplicationType.Server,
+                    ApplicationName = "Axiu UA Discovery",
+                    ApplicationType = ApplicationType.DiscoveryServer,
                     ApplicationConfiguration = config
                 };
                 //application.CheckApplicationInstanceCertificate(false, 2048).GetAwaiter().GetResult();
@@ -57,16 +66,46 @@ namespace Axiu.Opcua.Demo.Service
                     Console.WriteLine("证书验证失败!");
                 }
 
-                var dis =new DiscoveryServerBase();
+                var server = new DiscoveryServer();
                 // start the server.
-                application.Start(new AxiuOpcuaServer()).Wait();
+                application.Start(server).Wait();
             }
             catch (Exception ex)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("启动OPC-UA服务端触发异常:" + ex.Message);
+                Console.WriteLine("启动OPC-UA Discovery服务端触发异常:" + ex.Message);
                 Console.ResetColor();
             }
         }
+    }
+
+    /// <summary>
+    /// 已注册服务列表
+    /// </summary>
+    /// <remarks>
+    /// 主要用于保存服务注册信息,客户端获取列表时将对应的信息返回给客户端
+    /// </remarks>
+    public class RegisteredServerTable
+    {
+        public string ServerUri { get; set; }
+
+        public string ProductUri { get; set; }
+
+        public LocalizedTextCollection ServerNames { get; set; }
+
+        public ApplicationType ServerType { get; set; }
+
+        public string GatewayServerUri { get; set; }
+
+        public StringCollection DiscoveryUrls { get; set; }
+
+        public string SemaphoreFilePath { get; set; }
+
+        public bool IsOnline { get; set; }
+
+        /// <summary>
+        /// 最后一次注册时间
+        /// </summary>
+        public DateTime LastRegistered { get; set; }
     }
 }

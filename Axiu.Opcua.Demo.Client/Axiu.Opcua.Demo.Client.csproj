@@ -8,6 +8,52 @@
 
   <ItemGroup>
     <PackageReference Include="OPCFoundation.NetStandard.Opc.Ua" Version="1.4.362.42" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.6.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="DBInterfaceCommonLib">
+      <HintPath>D:\CET\Common\DBInterfaceCommonLib.dll</HintPath>
+    </Reference>
+    <Reference Include="PECSDBInterface">
+      <HintPath>D:\CET\Common\PECSDBInterface.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="OPC Foundation\CertificateStores\MachineDefault\certs\CET-Opcua [9FF8D567E039086661245AA5CDA7AB293DAC5AE4].der">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="OPC Foundation\CertificateStores\MachineDefault\private\CET-Opcua [9FF8D567E039086661245AA5CDA7AB293DAC5AE4].pfx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="OPC Foundation\CertificateStores\UA Applications\certs\CET-Opcua [9FF8D567E039086661245AA5CDA7AB293DAC5AE4].der">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="OPC Foundation\Logs\Quickstarts.ReferenceClient.log.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="OPC Foundation\pki\own\certs\Quickstart Reference Client [C6BAA247E51ABB942F3CAFE4F873DD92D5AA6AEA].der">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="OPC Foundation\pki\own\certs\Quickstart Reference Server [EFC789E73DDFFA02D0BF1D89DFB4D4AF1C81117B].der">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="OPC Foundation\pki\own\private\Quickstart Reference Client [C6BAA247E51ABB942F3CAFE4F873DD92D5AA6AEA].pfx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="OPC Foundation\pki\own\private\Quickstart Reference Server [EFC789E73DDFFA02D0BF1D89DFB4D4AF1C81117B].pfx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="OPC Foundation\pki\rejected\certs\Quickstart Reference Server [EFC789E73DDFFA02D0BF1D89DFB4D4AF1C81117B].der">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="OPC Foundation\pki\trusted\certs\CET-Opcua [9FF8D567E039086661245AA5CDA7AB293DAC5AE4].der">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="OPC Foundation\pki\trusted\certs\Quickstart Reference Client [C6BAA247E51ABB942F3CAFE4F873DD92D5AA6AEA].der">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>
