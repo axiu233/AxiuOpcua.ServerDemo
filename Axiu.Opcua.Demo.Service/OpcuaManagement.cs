@@ -19,7 +19,7 @@ namespace Axiu.Opcua.Demo.Service
                     ApplicationType = ApplicationType.Server,
                     ServerConfiguration = new ServerConfiguration()
                     {
-                        BaseAddresses = { "opc.tcp://172.17.4.68:8020/", "https://172.17.4.68:8021/" },
+                        BaseAddresses = { "opc.tcp://localhost:8020/", "https://localhost:8021/" },
                         MinRequestThreadCount = 5,
                         MaxRequestThreadCount = 100,
                         MaxQueuedRequestCount = 200,
